@@ -1,6 +1,6 @@
 import React from 'react'
 // import classes from './Modal.css'
-import Aux from '../../../hoc/Aux'
+import Aux from '../../../hoc/Auxilary'
 const orderSummary = (props)=>{
 
     const ingredientSummary =Object.keys(props.ingredients)

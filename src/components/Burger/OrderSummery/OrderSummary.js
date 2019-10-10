@@ -1,6 +1,6 @@
 import React from 'react'
-// import classes from './Modal.css'
 import Aux from '../../../hoc/Auxilary'
+import Button from '../../UI/Button/Button'
 const orderSummary = (props)=>{
 
     const ingredientSummary =Object.keys(props.ingredients)
@@ -21,6 +21,8 @@ const orderSummary = (props)=>{
                 {ingredientSummary}
             </ul>
             <p>Continue to Chekout?</p>
+            <Button btnType='Danger' clicked={props.cancel}>CANCEL</Button>
+            <Button btnType='Success' clicked={props.continue} >CONTINUE</Button>
         </Aux>
     );
 }

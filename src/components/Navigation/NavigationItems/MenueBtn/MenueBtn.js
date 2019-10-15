@@ -1,9 +1,11 @@
 import React from 'react';
 import classes from './MenueBtn.css';
 const menueBtn = (props)=>(
-    <button className={classes.MenueBtn} onClick={props.toggle}>
-    {props.children}
-    </button>
+    <div className={classes.MenueBtn} onClick={props.toggle}>
+    <div></div>
+    <div></div>
+    <div></div>
+    </div>
 );
 
 export default menueBtn;

@@ -11,7 +11,7 @@ const burger = (props)=>{
           }).reduce((prevEl,currEl)=>{
                return [...prevEl,...currEl]; 
           },[])
-    console.log(trasnformedIngredients);
+    
     if(trasnformedIngredients.length===0){
         trasnformedIngredients=<p>Put some ingredients</p>
     }

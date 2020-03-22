@@ -32,6 +32,7 @@ class ContactData extends Component {
                  console.log(response);
                 // alert("Order was sent!");
                  this.setState({loading: false, purchasing: false});
+                 this.props.history.push("/"); 
              })
              .catch(err=> {
                  this.setState({loading: false, purchasing: false});

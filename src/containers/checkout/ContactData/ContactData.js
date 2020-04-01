@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import Button from '../../../components/UI/Button/Button';
 import Spinner from '../../../components/UI/Spinner/Spinner';
 import classes from '../../checkout/ContactData/ContactData.css';
 import axios from '../../../axios-orders';
 import Input from '../../../components/UI/Input/Input';
+import * as actionTypes from '../../../store/actions';
+
 
 class ContactData extends Component {
     state = {
@@ -125,8 +128,8 @@ class ContactData extends Component {
             formData[identifier] = this.state.orderForm[identifier].value;
         }
         const order = {
-            ingredients: this.props.ingredients,
-            price: this.props.totalPrice,
+            ingredients: this.props.ings,
+            price: this.props.price,
             user_data: formData
         }
         axios.post('/orders.json', order)
@@ -134,6 +137,7 @@ class ContactData extends Component {
                 console.log(response);
 
                 this.setState({ loading: false, purchasing: false });
+                this.props.clearSentData();
                 this.props.history.push("/");
             })
             .catch(err => {
@@ -163,8 +167,6 @@ class ContactData extends Component {
                 <h4>Enter Your Contact Data</h4>
                 <form>
                     {inputFieldData}
-
-
                     <Button btnType="Success" clicked={this.onSubmitOrder} disabled={!this.state.isFormValid}>ORDER</Button>
                 </form>
             </div>
@@ -175,5 +177,17 @@ class ContactData extends Component {
         return (form)
     }
 }
+const mapStateToProps = state =>{
+    return {
+        ings: state.ingredients,
+        price: state.totalPrice
+    }
+}
 
-export default ContactData;
+const mapDispatchToProps = dispatch =>{
+    return {
+        clearSentData: () => dispatch ({type: actionTypes.CLEAR_STATE})
+    }
+    
+}
+export default connect(mapStateToProps, mapDispatchToProps)(ContactData);

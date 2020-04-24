@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import classes from './BuildControls.css'
 import BuildControl from './BuildControl/BuildControl'
 const controls=[
@@ -8,6 +9,9 @@ const controls=[
     {label: "Meat", type:'meat'}
 ];
 const buildControls = (props)=>{
+    let button = props.isAuthenticated
+        ? (<button className={classes.OrderButton} disabled={!props.purchasable} onClick={props.ordered} >Order Now</button>)
+        : (<button className={classes.OrderButton} onClick={props.toAuthentication} >Go to sign in</button>)
     return (
         <div className={classes.BuildControls}>
             <p>Price: <strong>{props.totalPrice.toFixed(2)}</strong></p>
@@ -19,11 +23,15 @@ const buildControls = (props)=>{
                     disabled={props.disabled[ctrl.type]}
                 />
             ))}
-            <button className={classes.OrderButton}
-                    disabled={!props.purchasable}
-                    onClick={props.ordered}
-            >Order Now</button>
+            {button}
         </div>
     );
 }
-export default buildControls
+
+const mapStateToProps = state => {
+    return {
+        isAuthenticated: state.auth.token!==null
+    };
+};
+
+export default connect(mapStateToProps)(buildControls)

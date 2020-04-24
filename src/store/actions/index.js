@@ -7,4 +7,10 @@ export {
     purchaseBurger,
     purchasedInit,
     ordersFetch
- } from './orders'
+ } from './orders';
+ export {
+    auth,
+    logout,
+    setAuthRedirectPath,
+    authCheckState
+ } from './auth'

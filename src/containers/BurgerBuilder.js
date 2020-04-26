@@ -16,31 +16,32 @@ class BurgerBuilder extends Component {
         purchasing: false,
     }
 
-    componentDidMount() {
+    componentWillMount() {
         console.log(this.props);
-        this.props.onInitIngredients();  
+        if (!this.props.building)
+            this.props.onInitIngredients();
     }
 
     purchaseContinueHandler = () => {
         this.props.purchasedInit();
-        this.props.history.push({pathname: '/checkout'});
+        this.props.history.push({ pathname: '/checkout' });
     }
 
     ToAuthentication = () => {
         this.props.onSetAuthRedirectPath('/checkout');
         this.props.history.push("/auth");
     }
-    
+
     purchaseHandler = () => {
         this.setState({
             purchasing: true
         })
     }
-    purchaseCancelHandler = ()=> {
+    purchaseCancelHandler = () => {
         this.setState({
             purchasing: false
         })
-        this.props.history.push({pathname: '/'});
+        this.props.history.push({ pathname: '/' });
     }
 
     render() {
@@ -57,7 +58,7 @@ class BurgerBuilder extends Component {
             orderSummary = (
                 <OrderSummary
                     ingredients={this.props.ings}
-                    continue={this.purchaseContinueHandler }
+                    continue={this.purchaseContinueHandler}
                     cancel={this.purchaseCancelHandler}
                     price={this.props.price}
                 />
@@ -94,21 +95,22 @@ class BurgerBuilder extends Component {
     }
 }
 
-const mapStateToProps = state =>{
+const mapStateToProps = state => {
     return {
         ings: state.burgerBuilder.ingredients,
         price: state.burgerBuilder.totalPrice,
         purchasable: state.burgerBuilder.purchasable,
-        error: state.burgerBuilder.error
+        error: state.burgerBuilder.error,
+        building: state.burgerBuilder.building
     }
 }
 const mapDispatchToProps = dispatch => {
     return {
-        onIngredientAdded: (ingName)=> dispatch (actionCreators.addIngredient(ingName)),
-        onIngredientRemoved: (ingName)=> dispatch (actionCreators.removeIngredient(ingName)),
-        onInitIngredients: () => dispatch (actionCreators.initIngredients()),
-        purchasedInit: () => dispatch (actionCreators.purchaseBurger()),
-        onSetAuthRedirectPath: (path)=> dispatch(actionCreators.setAuthRedirectPath(path))
+        onIngredientAdded: (ingName) => dispatch(actionCreators.addIngredient(ingName)),
+        onIngredientRemoved: (ingName) => dispatch(actionCreators.removeIngredient(ingName)),
+        onInitIngredients: () => dispatch(actionCreators.initIngredients()),
+        purchasedInit: () => dispatch(actionCreators.purchaseBurger()),
+        onSetAuthRedirectPath: (path) => dispatch(actionCreators.setAuthRedirectPath(path))
     }
 }
 
